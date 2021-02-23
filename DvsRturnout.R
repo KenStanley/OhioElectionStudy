@@ -2,6 +2,10 @@
 #  DvsRturnout.R - estimates the percentage of Democrats, eligible to vote, 
 #  in this election did so. 
 #
+#  This script takes five to ten minutes on my MacBook Air with 8 Gbyes of RAM, 45 seconds to 
+#  load aSWVFcolumns.rd, 115 seconds for the first loop and the rest (untimed) on the
+#  final loop. 
+#
 # Everyone who lives in a given precinct is either eligible to vote
 # in a given election or not, we found treating eligiblity as a binary 
 # not to be helpful. There are many elections in which voters are eligible 
@@ -26,8 +30,6 @@ load(file=file.path(SWVF_dir, "aSWVFcolumns.rds") ) # Create this file by
 #       and running 
 toc()
 
-# 
-#  These should
 first_election = 24
 last_election = 47
 tic()
@@ -94,6 +96,7 @@ allElectionPerformance["GENERAL.11.03.2015","electionDate"] = "nov2015"
 allElectionPerformance["PRIMARY.03.15.2016","electionDate"] = "mar2016"
 allElectionPerformance["GENERAL.11.08.2016","electionDate"] = "nov2016"
 allElectionPerformance["PRIMARY.05.02.2017","electionDate"] = "may2017"
+allElectionPerformance["GENERAL.11.07.2017","electionDate"] = "nov2017"
 allElectionPerformance["PRIMARY.05.08.2018","electionDate"] = "may2018"
 allElectionPerformance["GENERAL.08.07.2018","electionDate"] = "aug2018"
 allElectionPerformance["GENERAL.11.06.2018","electionDate"] = "nov2018"
@@ -104,6 +107,6 @@ allElectionPerformance["GENERAL.11.03.2020","electionDate"] = "nov2020"
 
 allElectionPerformance$relDemTurnout = allElectionPerformance$demVotes / allElectionPerformance$repVotes
 
-save(allElectionPerformance,file="allElectionPerformance.rds")
+save(allElectionPerformance,file="allElectionPerformance.rds",version=mySaveVersion)
 
 

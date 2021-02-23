@@ -1,6 +1,6 @@
 #
 #  callDemRepTurnoutAllElections.R - Computes the Democratic, Republican and Unaffiliated 
-#    turnout in all elections - this will be a rather large file and takes two hours to
+#    turnout in all elections - this takes two hours to
 #    complete(17 elections) on my MAcBook Air with 8 Gb of RAM. 
 #
 #  creates turnoutAllElections.rds
@@ -102,6 +102,5 @@ for (electionIndex in 1:length(allElections )) {
   
   
 }
-browser()
-save(turnoutAllElections,file="turnoutAllElections.rds")
+save(turnoutAllElections,file="turnoutAllElections.rds", version=mySaveVersion)
 # load(file="turnoutAllElections.rds")

@@ -1,5 +1,5 @@
 #
-#  studySchoolBoardElections 
+#  studySchoolBoardElections.R 
 #
 #  This file takes 1 minute on my MacBook Air with 8 Gbytes of RAM 
 #
@@ -12,15 +12,15 @@ source( "includeForAll.R") # includes an rm (list=ls())
 
 tic()
 # County2020RaceResultsByPrecinctSheet1 = read_excel(path=file.path(data_in_dir,"County2020RaceResultsByPrecinct.xlsx"),sheet=1)
-County2020RaceResultsByPrecinctSheet2 = read_excel(path=file.path(SWVF_dir,"County2020RaceResultsByPrecinct.xlsx"),sheet=2)
+# this is the only one we might have used County2020RaceResultsByPrecinctSheet2 = read_excel(path=file.path(SWVF_dir,"County2020RaceResultsByPrecinct.xlsx"),sheet=2)
 # County2020RaceResultsByPrecinctSheet3 = read_excel(path=file.path(data_in_dir,"County2020RaceResultsByPrecinct.xlsx"),sheet=3)
 # County2020RaceResultsByPrecinctSheet4 = read_excel(path=file.path(data_in_dir,"County2020RaceResultsByPrecinct.xlsx"),sheet=4)
 # County2020RaceResultsByPrecinctSheet5 = read_excel(path=file.path(data_in_dir,"County2020RaceResultsByPrecinct.xlsx"),sheet=5)
 # County2020RaceResultsByPrecinctSheet6 = read_excel(path=file.path(data_in_dir,"County2020RaceResultsByPrecinct.xlsx"),sheet=6)
 toc()
 tic()
-allColumns = colnames(County2020RaceResultsByPrecinctSheet2)
-allSchoolColumns = grepl("chool",allColumns)
+# allColumns = colnames(County2020RaceResultsByPrecinctSheet2)
+# allSchoolColumns = grepl("chool",allColumns)
 
 load( file="schoolDistInfo.rds",verbose=myVerbose) # schoolDistByPrecinct and schoolDistByVoters which are produced in collapseOhioVoterFile.R 
 
@@ -77,7 +77,7 @@ SchoolDistPresResultsSummary = group_by( SchoolDistPresidentialResults, County,
 SchoolDistPresResultsSummary$percentTrump = SchoolDistPresResultsSummary$Trump / 
   (  SchoolDistPresResultsSummary$Trump  + SchoolDistPresResultsSummary$Biden )
 
-save( list=c("SchoolDistPresResultsSummary"), file="SchoolDistPresResultsSummary.rds")
+save( list=c("SchoolDistPresResultsSummary"), file="SchoolDistPresResultsSummary.rds", version=mySaveVersion )
 
 totalNumVoters = sum(schoolDistSize$totalVoters)
 toc()

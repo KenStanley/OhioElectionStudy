@@ -53,7 +53,7 @@ aSWVF_67_88 = SWVF_67_88[,voterIdentificationColumns]
 
 aSWVF = rbind(aSWVF_1_22,aSWVF_23_44,aSWVF_45_66,aSWVF_67_88)
 toc()
-save(aSWVF,file=file.path(SWVF_dir,"aSWVFcolumns.rds")) 
+save(aSWVF,file=file.path(SWVF_dir,"aSWVFcolumns.rds"),version=mySaveVersion) 
 
 schoolDistByPrecinct = group_by(aSWVF,CITY_SCHOOL_DISTRICT,
                                 EXEMPTED_VILL_SCHOOL_DISTRICT,LOCAL_SCHOOL_DISTRICT,
@@ -62,6 +62,6 @@ schoolDistByPrecinct = group_by(aSWVF,CITY_SCHOOL_DISTRICT,
 schoolDistByVoters = group_by(aSWVF,CITY_SCHOOL_DISTRICT,
                               EXEMPTED_VILL_SCHOOL_DISTRICT,LOCAL_SCHOOL_DISTRICT) %>% summarise(numVoters=n())
 
-save( list=c("schoolDistByPrecinct", "schoolDistByVoters"),file="schoolDistInfo.rds")
+save( list=c("schoolDistByPrecinct", "schoolDistByVoters"),file="schoolDistInfo.rds",version=mySaveVersion)
 
 

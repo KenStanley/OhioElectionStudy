@@ -1,12 +1,15 @@
 #
 #  collectSchoolLevyData.R - 18 Feb 2020 - 
 #
+#  Takes 10 seconds to run 
+#
 #  Collects data from the local issues excel spreadsheets into a single data frame
 #  stored in "allIssues.rds"
 #
 setwd("/Users/kenstanley/GitRepository/github/politicalRcode/OhioElectionStudy")
 
 source( "includeForAll.R")
+tic()
 source("convertSchoolLevyToDataFrame.R")
 spreadsheet = "https://docs.google.com/spreadsheets/d/15maCc8ujhcMqpYXDu7a3EWDZz8LN1kcl9w0KFD-pDBs/edit#gid=365319428"
 
@@ -60,14 +63,14 @@ firstIndex = 1
 for ( index in firstIndex:length(fileNames)) {
   
   
-  issues = read_excel(path=file.path(data_in_dir,"schoolIssues",fileNames[index]),sheet=1,skip=skips[index])
+  issues = read_excel(path=file.path(data_in_dir,fileNames[index]),sheet=1,skip=skips[index])
   
   if( !( "Votes Against" %in% colnames(issues)) ) {
     print("Column names issues with index =",index," consider skip?")
     browser()
   } 
   
-  print(paste("index =", index))
+  # print(paste("index =", index))
   
 
   theseIssues = convertSchoolLevyToDataFrame( issues,electionDates[index], term=term, 
@@ -87,5 +90,6 @@ for ( index in firstIndex:length(fileNames)) {
 }
 
 allIssues = allconvertSchoolLevyToDataFrames
-save(allIssues,file="allIssues.rds")
+save(allIssues,file="allIssues.rds",version=mySaveVersion)
 
+toc()

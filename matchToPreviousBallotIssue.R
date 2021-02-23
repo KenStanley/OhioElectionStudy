@@ -1,5 +1,8 @@
 #
-#  matchToPreviousBallotIssue.R - 
+#  matchToPreviousBallotIssue.R 
+#
+#    Takes one second to run 
+#
 #    Categorizes all issues in each of the following areas:
 #        time = Length of time (in years) with continuing oeriod of time set to 40 and multiple times set to 37
 #        type = "Levy", "Income", "Bond" [less common: "Combo", "Misc", "Sales"]
@@ -110,7 +113,7 @@ allIssuesWsd = merge( allIssuesWdate[,relevantColumns],
                       by=c("County" ,  "Subdivision Name" ))
 
 allIssuesWindex = allIssuesWsd
-save(allIssuesWindex,file="allIssuesWindex.rds")
+save(allIssuesWindex,file="allIssuesWindex.rds",version=mySaveVersion)
 
 
 allPurposes = group_by(allIssues,type,purposeNow,Purpose) %>% summarise(count=n())
@@ -180,7 +183,7 @@ allIssuesWithMinScore = merge( allIssuesWithAPrevious, bestScores,
                                by.x=c("index.x","score"),
                                by.y=c("index.x","minScore") ) 
 
-save(allIssuesWithMinScore, file="allIssuesWithMinScore.rds")
+save(allIssuesWithMinScore, file="allIssuesWithMinScore.rds",version=mySaveVersion)
 
 
 bestNewScores = group_by( allIssuesWithAPrevious, index.x ) %>% summarise( minNewScore = min(newScore))
@@ -191,7 +194,7 @@ allIssuesWithMinNewScore = merge( allIssuesWithAPrevious, bestNewScores,
 
 allIssuesWithMinNewScoreUnique = allIssuesWithMinNewScore[which(!duplicated(allIssuesWithMinNewScore$index.x)),]
 
-save(allIssuesWithMinNewScoreUnique, file="allIssuesWithMinNewScore.rds")
+save(allIssuesWithMinNewScoreUnique, file="allIssuesWithMinNewScore.rds",version=mySaveVersion)
 
 toc()
 

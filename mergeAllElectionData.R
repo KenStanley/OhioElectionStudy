@@ -165,6 +165,18 @@ mergeAllElectionData <- function( allIssuesWithMinScore, allElectionPerformance,
     
   } 
   
+  # nrow(allIssues) # loses two issues from Ledgemont which is no longer a school district 
+  # nrow(allIssuesWbothEP)
+  # nrow(allIssuesWithMinScore)
+  # 
+  allIssuesWithMinScoreA = allIssuesWithMinScore %>% 
+    dplyr::rename( index = index.x )
+  missingIssues = anti_join(allIssues,allIssuesWPrevEP,
+                            by="index")
+  
+  missingElections = group_by( missingIssues, election.y) %>% summarise(count=n())
+  
+  
   return <- allIssuesWlocal
   
   
