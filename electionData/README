@@ -1,0 +1,16 @@
+The files in this directory were downloaded from the State of Ohio Election Results webpage
+
+   I found them by starting from the main web page, https://www.ohiosos.gov/elections/election-results-and-data/, clicking on each
+year individually and downloading the "local Issues Results (XLSX)" link for each election. Some files include the
+date of the election. Others do not - in those cases, I renamed the files to include the date of the election. Some of the
+excel files have the useful header informaion in the second row, others have it in the first row. See studyAllSchoolLevies.R for details.
+
+   I found excel files for all primary (Mar or May) and November elections dating back to 2013. I also found some August elections, though 
+not all of them. Some counties have Sept or Oct elections, I did not try to collect those. 
+
+Here are the files for 2020:
+   https://www.ohiosos.gov/elections/election-results-and-data/
+      https://www.ohiosos.gov/elections/election-results-and-data/2020/ 
+         https://www.ohiosos.gov/globalassets/elections/2020/gen/2020-11-03_localissuesresults.xlsx
+         https://www.ohiosos.gov/globalassets/elections/2020/spec/2020-08-04_localissuesresults.xlsx
+         https://www.ohiosos.gov/globalassets/elections/2020/pri/issues.xlsx
