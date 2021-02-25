@@ -74,7 +74,7 @@ issuesFlag = chooseIssuesToStudy( allIssues=allIssuesWallInfo, minScore = minSco
                                   thisType = thisType,
                                   thisTime = thisTime,
                                   thisPurpose  = thisPurpose )
-stopifnot( sum(is.na(issuesFlagCheck)) == 3) # I should look into these 3 sometime
+stopifnot( sum(is.na(issuesFlag)) == 3) # I should look into these 3 sometime
 issues = allIssuesWallInfo[which(issuesFlag),]
 
 if ( length(unique(issues$Description.x))> 1 ) { 
