@@ -7,7 +7,7 @@
 setwd("/Users/kenstanley/GitRepository/github/politicalRcode/OhioElectionStudy")
 
 
-startClean = FALSE
+startClean = TRUE
 
 if ( startClean) {
   source( "includeForAll.R") # includes an rm (list=ls())
