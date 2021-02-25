@@ -39,8 +39,6 @@ mergeAllElectionData <- function( allIssuesWithMinScore, allElectionPerformance,
     (allSchoolDistPresResults$Trump + allSchoolDistPresResults$Biden )
   
   #
-  stopifnot( sum(duplicated(allIssuesWithMinScoreUnique[,c("election.x","schoolDist","percentYes.x")]))==0)
-  
   # The only school district that we are throwing out is Ledgemont which no onger exists
   
   allIssuesWithPercentTrump = merge(allIssuesWithMinScore, allSchoolDistPresResults[,c("schoolDist","percentTrump")],by="schoolDist" ) 

@@ -2,8 +2,13 @@
 #
 # https://github.com/KenStanley/OhioElectionStudy
 #
-   This set of files creates the model that Ken Stanley used to understand Ohio School 
-   Levies in https://docs.google.com/document/d/1yw_P8Y0hCvn5XypTGIqJPYHAPhEqr-ZCONyeEsCptIo/edit#
+# http://tiny.cc/OhioSchoolBallotStudy - writeup 
+#
+# Supplemental Data for Ohio School Levy Study, Ken Stanley
+# http://tiny.cc/SchoolBallotSupplemental
+#
+
+
    
    You will need to download the state voter files from https://www6.ohiosos.gov/ords/f?p=VOTERFTP:STWD:::#stwdVtrFiles or google (Download Ohio Statewide Voter Files) and click on "Statewide Voter Files"
    

@@ -1,54 +1,34 @@
 #
-# compareAcrossLevyTypes.R
+# wed24Feb.R
 #
-# The newissues is worthless because by mixing all of the issues together, we are now including 
-# issues that differ and hence we are not replicating the prevou match and because we are insisting on 
-# the most recent election, instead of the best match, we are getting garbage. 
 #
-#  Error message: cannot coerce class ‘c("simpleError", "error", "condition")’ to a data.frame 
-#  may mean a failed internet request 
+# This was run Wednesday, February 24, 2021 with the output used in the 
 #
-
 setwd("/Users/kenstanley/GitRepository/github/politicalRcode/OhioElectionStudy")
 
 
 source( "includeForAll.R") # includes an rm (list=ls())
+useLocalRdsFiles = TRUE 
 
-tic()
-
-#
-#  Hmm, where is percentTrump computed? - see SchoolDistPresResultsSummary.rds below 
-#     There is a bit of an issue with percentTrump: overlapping districts. 
-#     We might be able to deal with this by using group_by, but we probably ought 
-#     to check it against the voter database just to be sure. Not a top priority for now
-#     as percentTrump did not end up being helpful to us. 
-#  And don't forget the enrollment figures that we looked up earlier 
-
-load(file="electionCoefficients.rds",verbose=myVerbose)
-
-#
-load(file="allIssuesWithMinScore.rds", verbose=myVerbose) 
-# ugly hack 
-allIssuesWithMinScoreUnique = allIssuesWithMinScore[!duplicated(allIssuesWithMinScore$index.x),]
-nrow(allIssuesWithMinScoreUnique[duplicated(allIssuesWithMinScoreUnique[,c("election.x","schoolDist","percentYes.x")]),])
-
-allIssuesWithMinScore = allIssuesWithMinScoreUnique
+print(paste("Top of compareAcrossLevyTypes.R Sys.time() = ", Sys.time()))
 
 #
 #  Inputs:
 #
-load(file="allElectionPerformance.rds", verbose=myVerbose) # computed in DvsRturnout - information about evey school district, this is where relDemPerformance comes from 
-load(file="electionResultToVoterFileMatches.rds", verbose=myVerbose) # uniqueMatches = school district matches between voter file and election result files (excel) - matches done by hand 
-load(file="turnoutAllElections.rds", verbose=myVerbose) # turnoutAllElections 
-load(file="SchoolDistPresResultsSummary.rds", verbose=myVerbose) # SchoolDistPresResultsSummary and SchoolDistPresResultsFullSummary created in studySchoolBoardElections.R appear to be identical
-spreadsheet = "https://docs.google.com/spreadsheets/d/1WqndSm8cuMsA_KLSSDB8IkYkgcg2k4ZFWudEckoNUiA/edit#gid=0"
-# write_sheet_nice( allDateConversion, ss=spreadsheet,sheet="allDateConversion")
-# betterDateConversion = read_sheet_nice(  ss=spreadsheet,sheet="allDateConversion") # -  see addMoreInfo.r top commentsto see how this was created
-# save( betterDateConversion, file="betterDateConversion.rds",version=mySaveVersion)
-load(file="betterDateConversion.rds", verbose=myVerbose)
-load(file="allIssuesWindex.rds", verbose=myVerbose) # This has allIssues, not just those with a previous issue from the same district 
-
-load(file="allIssuesWithMinNewScore.rds", verbose=myVerbose)
+if( useLocalRdsFiles ) {
+  
+  load(file="electionCoefficients.rds",verbose=myVerbose) # "electionCoefficients" 
+  load(file="allIssuesWithMinScore.rds", verbose=myVerbose) # "all issues matched to a previous issue" 
+  stopifnot(nrow(allIssuesWithMinScore[duplicated(allIssuesWithMinScore[,c("election.x","schoolDist","percentYes.x")]),]) == 0 ) 
+  load(file="allElectionPerformance.rds", verbose=myVerbose) # "election performance" # computed in DvsRturnout - information about evey school district, this is where relDemPerformance comes from 
+  load(file="electionResultToVoterFileMatches.rds", verbose=myVerbose) # "unique matches" #  uniqueMatches = school district matches between voter file and election result files (excel) - matches done by hand 
+  load(file="turnoutAllElections.rds", verbose=myVerbose) # "election turnout" # turnoutAllElections 
+  load(file="SchoolDistPresResultsSummary.rds", verbose=myVerbose) # SchoolDistPresResultsSummary and SchoolDistPresResultsFullSummary created in studySchoolBoardElections.R appear to be identical
+  load(file="betterDateConversion.rds", verbose=myVerbose) # allDateConversion # converts the three types of election date that we use: nov2013	GENERAL.11.05.2013	11/1/2013
+  load(file="allIssuesWindex.rds", verbose=myVerbose) # "all issues"  # This has allIssues, not just those with a previous issue from the same district 
+} else {
+# supplementalDataSpreadsheet is defined in includeForAll.R
+}
 
 minScore = 0
 maxScore = 8
@@ -226,7 +206,6 @@ columnsToCompare = c("index" , "election" ,"schoolDist" ,  "election.y"     ,  "
                      "oldPrevious" , "index.y"  )
 
 
-browser()
 # browser()
 # browser()
 
@@ -261,8 +240,7 @@ setdiff(colnames(allIssueMatches) , columnsToPrint)
 allMatches = allIssueMatches[,columnsToPrint]
 
 allMatches$score  = as.numeric( allMatches$score )
-
-releaseSpreadsheet = "https://docs.google.com/spreadsheets/d/1EnEvJ-P4CC4gZpOr-3Dgni2gKwG17ZudjgdJwG88YxI/edit"
+supplementalDataSpreadsheet
 # write_sheet_nice(allMatches,ss=releaseSpreadsheet, sheet="allMatches")
 
 
@@ -291,9 +269,6 @@ setdiff( allElections, summaryAnotherElections$election)
 setdiff( allElections, allElectionLeans)
 
 setdiff( allElectionLeans, allElections)
-
-browser()
-browser()
 
 #
 # In what appears to be blind luck, the one election that lm() drops is
@@ -435,4 +410,21 @@ allSchoolDistricts = group_by( allIssuesWindex, County, schoolDist ) %>% summari
 # residualVariance = sum( (thisTest$percentYes - thisTest$pred )^2)
 # rsquared = ( variance - residualVariance ) / variance
 # 
+# write_sheet_nice( allIssuesWindex, ss=supplementalDataSpreadsheet ,sheet="all issues")
+
+allIssuesWithMinScore$time.x = as.numeric( allIssuesWithMinScore$time.x )
+allIssuesWithMinScore$time.y = as.numeric( allIssuesWithMinScore$time.y )
+allIssuesWithMinScore$yearsSinceScore = as.numeric( allIssuesWithMinScore$yearsSinceScore )
+allIssuesWithMinScore$Length.y = as.numeric( allIssuesWithMinScore$Length.y )
+allIssuesWithMinScore$Length.x = as.numeric( allIssuesWithMinScore$Length.x )
+allIssuesWithMinScore$score = as.numeric( allIssuesWithMinScore$score )
+allIssuesWithMinScore$newScore = as.numeric( allIssuesWithMinScore$newScore )
+write_sheet_nice( allIssuesWallInfo, ss=supplementalDataSpreadsheet ,sheet="all issues matched to a previous issue")
+# write_sheet_nice( SchoolDistPresResultsSummary, ss=supplementalDataSpreadsheet ,sheet="school district presidential results summary")
+save(allIssuesWallInfo, file="allIssuesWallInfo.rds",version=mySaveVersion)
+
+
+
+
+
 

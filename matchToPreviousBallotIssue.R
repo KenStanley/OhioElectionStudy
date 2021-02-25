@@ -183,6 +183,9 @@ allIssuesWithMinScore = merge( allIssuesWithAPrevious, bestScores,
                                by.x=c("index.x","score"),
                                by.y=c("index.x","minScore") ) 
 
+allIssuesWithMinScore = allIssuesWithMinScore[which(!duplicated(allIssuesWithMinScore$index.x)),]
+
+
 save(allIssuesWithMinScore, file="allIssuesWithMinScore.rds",version=mySaveVersion)
 
 
